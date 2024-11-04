@@ -1,0 +1,299 @@
+﻿<!DOCTYPE html>
+<html>
+<title>
+    Проєкт
+</title>
+<body>
+
+<style>
+        /* Стилізація хедера */
+        header {
+            background-color: #f7f6f4;
+            padding: 10px 0;
+            border-bottom: 4px solid #076cac;
+            width: 100%;
+            box-sizing: border-box;
+            display: flex; /* Додаємо Flexbox */
+            align-items: center; /* Вертикальне вирівнювання */
+            justify-content: space-between; /* Розподіл простору між елементами */
+        }
+
+        /* Логотип */
+        .logo {
+            width: 100px;
+        }
+
+        /* Навігаційне меню */
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            align-items: center;
+        }
+
+        nav ul li {
+            margin-right: 25px;
+        }
+
+        nav ul li a {
+            font-family: Arial, sans-serif;
+            font-size: 16px;
+            font-weight: bold;
+            color: #000000;
+            text-decoration: none;
+        }
+
+        nav ul li a:hover {
+            text-decoration: underline;
+        }
+
+        /* Стилізація кнопки входу */
+        .login-button {
+            padding: 10px 20px;
+            background-color: #076cac;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-right: 70px; /* Зміна на margin-left */
+        }
+
+        .login-button:hover {
+            background-color: #054771;
+        }
+
+        /* Стилі для кнопки меню */
+        .menu-button {
+            display: none; /* Приховуємо кнопку за замовчуванням */
+            background-color: #076cac;
+            color: white;
+            padding: 10px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+            margin-left: 70px;
+        }
+
+        /* Випадаюче меню */
+        .down-content {
+            opacity: 0;
+            visibility: hidden;
+            position: absolute;
+            background-color: #DCDCDC;
+            min-width: 155px;
+            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            z-index: 1;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .down-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            border-bottom: 1px solid #ccc;
+            transition: background-color 0.2s ease;
+        }
+
+        .down-content a:hover {
+            background-color:#A9A9A9;
+        }
+
+        .down:hover .down-content {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .down:hover .menu-button {
+            background-color: #054771;
+        }
+
+        /* Контейнер для основного контенту */
+        .content-container {
+            width: 100%;
+            max-width: 1400px;
+            margin: 20px auto;
+            padding: 0 20px;
+            box-sizing: border-box;
+        }
+
+        /* Грід-контейнер для карток */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); /* 3 картки в ряд */
+            gap: 20px;
+        }
+
+        /* Стилізація картки продукту */
+        .product-card {
+            border: 1px solid #ccc;
+            padding: 20px;
+            border-radius: 10px;
+            background-color: #fff;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        /* Зображення в картці */
+        .product-card img {
+            width: 100%;
+            height: 200px; /* Фіксована висота зображення */
+            object-fit: cover; /* Збереження пропорцій */
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+
+        /* Заголовок картки */
+        .product-card h3 {
+            font-family: 'Arial', sans-serif;
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 10px;
+        }
+
+        /* Опис картки */
+        .product-card p {
+            font-family: 'Arial', sans-serif;
+            font-size: 16px;
+            color: #555;
+            line-height: 1.6;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Ціна продукту */
+        .product-card .price {
+            font-size: 20px;
+            font-weight: bold;
+            color: #076cac;
+            margin-bottom: 10px;
+        }
+
+        /* Кнопка купівлі */
+        .buy-button {
+            padding: 10px 20px;
+            background-color: #076cac;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .buy-button:hover {
+            background-color: #054771;
+        }
+
+        /* Медіа-запит для пристроїв шириною менше 960px */
+        @media (max-width: 960px) {
+            .product-grid {
+                grid-template-columns: 1fr 1fr; /* 2 картки в ряд */
+            }
+        }
+
+        /* Медіа-запит для пристроїв шириною менше 768px */
+        @media (max-width: 768px) {
+            nav ul {
+                display: none;
+            }
+
+            .product-grid {
+                grid-template-columns: 1fr; /* 1 картка в ряд */
+            }
+
+            .menu-button {
+                display: inline-block; /* Відображаємо кнопку меню на мобільних пристроях */
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <img src="icon.jpg" alt="Логотип" class="logo" style="height: 70px;">
+    <nav>
+        <ul>
+            <li><a href="#home">Головна</a></li>
+            <li><a href="#about">Про нас</a></li>
+            <li><a href="#contact">Контакти</a></li>
+            <li><a href="#questions">Запитання</a></li>
+        </ul>
+    </nav>
+    <div class="down">
+        <button class="menu-button">Меню</button>
+        <div class="down-content">
+            <a href="#home">Головна</a>
+            <a href="#about">Про нас</a>
+            <a href="#contact">Контакти</a>
+            <a href="#questions">Запитання</a>
+        </div>
+    </div>
+    <button class="login-button">Увійти</button>
+</header>
+
+<main class="content-container">
+    <section id="hotels" class="product-grid">
+        <article class="product-card">
+            <img src="hotel.jpg" alt="Hotel Image">
+            <h3>Boutique Hotel Portofino</h3>
+            <p>
+                Бутік-готель Portofino розташований на узбережжі Чорного моря.
+                До послуг гостей басейн, приватний пляж і ресторан.
+            </p>
+            <p class="price">$299.99</p>
+            <button class="buy-button">Купити</button>
+        </article>
+
+        <article class="product-card">
+            <img src="hotel2.jpg" alt="Hotel Image">
+            <h3>Luxury Resort Villa</h3>
+            <p>
+                Готель на віллі з басейном і видом на море.
+                Ідеальний для відпочинку сімей та пар.
+            </p>
+            <p class="price">$399.99</p>
+            <button class="buy-button">Купити</button>
+        </article>
+
+        <article class="product-card">
+            <img src="hotel3.jpg" alt="Hotel Image">
+            <h3>Seaside Paradise</h3>
+            <p>
+                Готель на першій лінії моря з сучасними номерами
+                та багатим сервісом для кожного гостя.
+            </p>
+            <p class="price">$199.99</p>
+            <button class="buy-button">Купити</button>
+        </article>
+
+        <article class="product-card">
+            <img src="hotel4.jpg" alt="Hotel Image">
+            <h3>Cozy Beach Hotel</h3>
+            <p>
+                Невеликий затишний готель біля пляжу, що пропонує комфорт
+                і спокійний відпочинок біля моря.
+            </p>
+            <p class="price">$149.99</p>
+            <button class="buy-button">Купити</button>
+        </article>
+    </section>
+</main>
+
+</body>
+</html>
